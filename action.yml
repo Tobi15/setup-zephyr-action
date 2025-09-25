@@ -15,7 +15,7 @@ inputs:
     required: true
   path_west_manifest:
     description: "Path to use as manifest"
-    required: true
+    required: false
 
 runs:
   using: "composite"
@@ -32,17 +32,20 @@ runs:
           sudo apt-get install -y libc6-dev-i386
         fi
 
-    - name: print current dir 
-      shell: bash
-      run: |
-        echo $GITHUB_WORKSPACE
     - name: West init and update
       shell: bash
       run: |
-        cd ${{ inputs.path_west_manifest }}
-        west init -l .
-        cd ${{ inputs.path_west_workspace }}
-        west update
+        if [ -n "${{ inputs.path_west_manifest }}" ]; then
+          echo "Using provided manifest: ${{ inputs.path_west_manifest }}"
+          cd ${{ inputs.path_west_manifest }}
+          west init -l .
+        else
+          echo "No manifest provided, initializing with Zephyr latest"
+          west init -m https://github.com/zephyrproject-rtos/zephyr ${{ inputs.path_west_workspace }}
+        fi
+
+        cd "${{ inputs.path_west_workspace }}"
+        west update -o=--depth=1 -n
         
 
     - name: Environment setup
