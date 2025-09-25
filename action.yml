@@ -39,8 +39,9 @@ runs:
     - name: West init and update
       shell: bash
       run: |
-        cd "${{ inputs.path_west_workspace }}"
-        west init -l --mf "${{ inputs.path_west_manifest }}" .
+        cd ${{ inputs.path_west_workspace }}
+        pwd
+        west init -l --mf ${{ inputs.path_west_manifest }} .
         west update
         
 
