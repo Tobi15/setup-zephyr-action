@@ -10,6 +10,12 @@ inputs:
     description: "Space-separated list of toolchains to setup (e.g. 'arm-zephyr-eabi x86_64-zephyr-elf')"
     required: false
     default: "arm-zephyr-eabi x86_64-zephyr-elf"
+  path_west_workspace:
+    description: "Path to use as west workspace root"
+    required: true
+  path_west_manifest:
+    description: "Path to use as manifest"
+    required: true
 
 runs:
   using: "composite"
@@ -33,12 +39,7 @@ runs:
     - name: West init and update
       shell: bash
       run: |
-        if [ -f manifest-repo/west.yml ]; then
-          west init -l --mf manifest-repo/west.yml $GITHUB_WORKSPACE
-        else
-          west init -l
-        fi
-        west update -o=--depth=1 -n
+        west init -l --mf "${{ inputs.path_west_manifest }}" "${{ inputs.path_west_workspace }}"
 
     - name: Environment setup
       shell: bash
