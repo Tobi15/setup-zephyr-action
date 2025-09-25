@@ -17,5 +17,7 @@ jobs:
         with:
           sdk_version: "0.17.0"
           toolchains: "arm-zephyr-eabi"
+          path_west_workspace: ${{ github.workspace }}
+          path_west_manifest: ${{ github.workspace }}/manifest-repo/west.yml
       - run: west build -b nrf52840dk_nrf52840 samples/hello_world
 ```

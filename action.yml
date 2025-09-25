@@ -40,7 +40,9 @@ runs:
       shell: bash
       run: |
         west init -l --mf "${{ inputs.path_west_manifest }}" "${{ inputs.path_west_workspace }}"
-
+        cd "${{ inputs.path_west_workspace }}"
+        west update -o=--depth=1 -n
+        
     - name: Environment setup
       shell: bash
       run: |
