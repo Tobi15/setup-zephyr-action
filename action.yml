@@ -73,7 +73,7 @@ runs:
       uses: actions/cache@v4
       with:
         path: ./zephyr-sdk
-        key: ${{ env.SDK_FILE }}-${{ inputs.toolchains// /- }}
+        key: ${{ env.SDK_FILE }}-${{ inputs.toolchains }}
 
     - if: ${{ steps.cache-toolchain.outputs.cache-hit != 'true' }}
       name: Download Zephyr SDK
