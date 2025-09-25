@@ -26,6 +26,10 @@ runs:
           sudo apt-get install -y libc6-dev-i386
         fi
 
+    - name: print current dir 
+      shell: bash
+      run: |
+        echo $GITHUB_WORKSPACE
     - name: West init and update
       shell: bash
       run: |
@@ -96,3 +100,4 @@ runs:
             ${SETUP_FILE} ${SETUP_OPT}h
         fi
         ${SETUP_FILE} ${SETUP_OPT}c
+
